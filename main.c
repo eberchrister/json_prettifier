@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
     buffer[length] = '\0';
 
     // guesstimate, you may need to adopt this for very large files
-	char* buf = malloc(length*1024);
+	char* buf = malloc(length*1024*9999);
 	int res = json_prettify(buffer, buf);
 	if (res) {
 		printf("\n\n\n\n");
@@ -41,13 +41,7 @@ int main(int argc, char* argv[]) {
 		printf("-------------------------------------------------\n");
 		printf("%s\n", buf);
 		printf("-------------------------------------------------\n");
-		printf("HEX\n");
-		printf("-------------------------------------------------\n");
-		while (*buf) {
-			printf("%02x ", *buf);
-			buf++;
-		}
-		printf("\n-------------------------------------------------\n");
+		printf("FAIL\n");
 		return 1;
 	}
 	printf("\n\n\n\n");
@@ -62,12 +56,6 @@ int main(int argc, char* argv[]) {
 	printf("-------------------------------------------------\n");
 	printf("%s\n", buf);
 	printf("-------------------------------------------------\n");
-	printf("HEX\n");
-	printf("-------------------------------------------------\n");
-		while (*buf) {
-			printf("%02x ", *buf);
-			buf++;
-		}
-	printf("\n-------------------------------------------------\n");
+	printf("SUCCESS\n");
 	return 0;
 }

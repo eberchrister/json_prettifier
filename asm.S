@@ -550,20 +550,19 @@ json_prettify:
             /*  if comma is found, then that signifies that
                 this current array is done and can be treated
                 as a value : 
-                    ...[v^ --> ...v^ 
+                    ...[v^ --> ...^ 
             */
 
             /* ...[v^ --> ...v^ */
+            add rbp, 2
+            sub rbx, 2
+            jmp .comma
+
+        .process_array_close_intermediate: 
+            /* collapse ...[v^ --> v^ */
             add rbp, 1
             sub rbx, 1
             mov byte ptr [rbp+1], 'v'
-            jmp .error
-            jmp .comma
-
-        .process_array_close_intermediate:
-            /* collapse ...[v^ --> ^ */
-            add rbp, 2
-            sub rbx, 2
             jmp .process_array_close
 
         .array_close_end_intermediate:
