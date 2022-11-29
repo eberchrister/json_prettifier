@@ -163,17 +163,12 @@ json_prettify:
         jl .error
         mov rdx, r14
 
+        mov ecx, 0x20202020
         .comma_array_tabbing:
             cmp rdx, 0
             je .comma_array_tabbing_end
-            mov byte ptr [rsi], ' '
-            inc rsi
-            mov byte ptr [rsi], ' '
-            inc rsi
-            mov byte ptr [rsi], ' '
-            inc rsi
-            mov byte ptr [rsi], ' '
-            inc rsi
+            mov [rsi], ecx
+            add rsi, 4
             dec rdx
             jmp .comma_array_tabbing
 
@@ -481,17 +476,12 @@ json_prettify:
     cmp r14, 0
     jl .error
     mov rdx, r14
+    mov ecx, 0x20202020
     .square_value_tabbing:
         cmp rdx, 0
         je .square_value_tabbing_end
-        mov byte ptr [rsi], ' '
-        inc rsi
-        mov byte ptr [rsi], ' '
-        inc rsi
-        mov byte ptr [rsi], ' '
-        inc rsi
-        mov byte ptr [rsi], ' '
-        inc rsi
+        mov [rsi], ecx
+        add rsi, 4
         dec rdx
         jmp .square_value_tabbing
     .square_value_tabbing_end:
@@ -508,17 +498,12 @@ json_prettify:
         cmp r14, 0
         jl .error
         mov rdx, r14
+        mov ecx, 0x20202020
         .square_close_tabbing:
             cmp rdx, 0
             je .square_close_tabbing_end
-            mov byte ptr [rsi], ' '
-            inc rsi
-            mov byte ptr [rsi], ' '
-            inc rsi
-            mov byte ptr [rsi], ' '
-            inc rsi
-            mov byte ptr [rsi], ' '
-            inc rsi
+            mov [rsi], ecx
+            add rsi, 4
             dec rdx
             jmp .square_close_tabbing
         
