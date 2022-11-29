@@ -276,17 +276,12 @@ json_prettify:
     cmp r14, 0
     jl .error
     mov rdx, r14
+    mov ecx, 0x20202020
     .curly_key_tabbing:
         cmp rdx, 0
         je .curly_key_tabbing_end
-        mov byte ptr [rsi], ' '
-        inc rsi
-        mov byte ptr [rsi], ' '
-        inc rsi
-        mov byte ptr [rsi], ' '
-        inc rsi
-        mov byte ptr [rsi], ' '
-        inc rsi
+        mov [rsi], ecx
+        add rsi, 4
         dec rdx
         jmp .curly_key_tabbing
     .curly_key_tabbing_end:
@@ -312,17 +307,12 @@ json_prettify:
         cmp r14, 0
         jl .error
         mov rdx, r14
+        mov ecx, 0x20202020
         .curly_close_tabbing:
             cmp rdx, 0
             je .curly_close_tabbing_end
-            mov byte ptr [rsi], ' '
-            inc rsi
-            mov byte ptr [rsi], ' '
-            inc rsi
-            mov byte ptr [rsi], ' '
-            inc rsi
-            mov byte ptr [rsi], ' '
-            inc rsi
+            mov [rsi], ecx
+            add rsi, 4
             dec rdx
             jmp .curly_close_tabbing
         .curly_close_tabbing_end:
