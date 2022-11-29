@@ -243,7 +243,6 @@ json_prettify:
     /* if there's none of the above, then it's an error */
     mov r10, 20
     jmp .error
-    /* TODO : IMPLEMENT COMMA FEATURE */
 
     .curly_comma_empty:
         /* {^ --> v^ */
@@ -252,14 +251,12 @@ json_prettify:
 
     .curly_brace_empty:
         /* {^ --> ^ */
-        inc rbp
-        dec rbx
+        mov byte ptr [rbp+1], 'v'
         jmp .process_object_close
 
     .curly_bracket_empty:
         /* {^ --> ^ */
-        inc rbp
-        dec rbx
+        mov byte ptr [rbp+1], 'v'
         jmp .process_array_close
 
     .curly_end:
@@ -437,7 +434,7 @@ json_prettify:
     add rsp, 8
 
     /* check if there's a comma, bracket, braces, or 0*/
-    /* TODO : IMPLEMENT COMMA FEATURE */
+
     cmp byte ptr [rdi], ','
     je .square_comma_empty
     cmp byte ptr [rdi], '}'
@@ -457,15 +454,13 @@ json_prettify:
         jmp .comma
 
     .square_brace_empty:
-        /* [^ --> ^ */
-        inc rbp
-        dec rbx
+        /* [^ --> v^ */
+        mov byte ptr [rbp+1], 'v'
         jmp .process_object_close
 
     .square_bracket_empty:
-        /* [^ --> ^ */
-        inc rbp
-        dec rbx
+        /* [^ --> v^ */
+        mov byte ptr [rbp+1], 'v'
         jmp .process_array_close
 
     .square_end:
@@ -558,8 +553,9 @@ json_prettify:
             */
 
             /* ...[v^ --> ...v^ */
-            add rbp, 2
-            sub rbx, 2
+            add rbp, 1
+            sub rbx, 1
+            mov byte ptr [rbp+1], 'v'
             jmp .comma
 
         .process_array_close_intermediate: 
