@@ -110,6 +110,7 @@ json_prettify:
 
 .comma:
     /* find out if comma is in object or array */
+    
     mov r8, rbp
     mov r9, 0
     .check_rbp:
@@ -206,7 +207,6 @@ json_prettify:
     inc rsi
     inc rdi
     inc r14
-
 
     sub rsp, 8
     call whitespace_skip
@@ -310,6 +310,7 @@ json_prettify:
         
 
     .process_object_close:
+    
         mov r10, 23
         mov byte ptr [rsi], '\n'
         inc rsi
@@ -373,18 +374,21 @@ json_prettify:
         add rbp, 2
         sub rbx, 2
         mov byte ptr [rbp+1], 'v'
+
         jmp .comma
 
         .process_object_close_intermediate:
-            /* collapse ...{kv^ --> ^ */
-            add rbp, 3
-            sub rbx, 3
+            /* collapse ...{kv^ --> v^ */
+            add rbp, 2
+            sub rbx, 2
+            mov byte ptr [rbp+1], 'v'
             jmp .process_object_close
 
         .curly_to_square_intermediate:
-            /* collapse ...{kv^ --> ^ */
-            add rbp, 3
-            sub rbx, 3
+            /* collapse ...{kv^ --> v^ */
+            add rbp, 2
+            sub rbx, 2
+            mov byte ptr [rbp+1], 'v'
             jmp .process_array_close
 
         .end_intermediate:
@@ -569,12 +573,15 @@ json_prettify:
             /* collapse ...[v^ --> ^ */
             add rbp, 2
             sub rbx, 2
+
             jmp .end
 
         .array_to_object_intermmediate:
-            /* collapse ...[v^ --> ^ */
-            add rbp, 2
-            sub rbx, 2
+            /* collapse ...[v^ --> v^ */
+            add rbp, 1
+            sub rbx, 1
+            mov byte ptr [rbp+1], 'v'
+
             jmp .process_object_close
 
 

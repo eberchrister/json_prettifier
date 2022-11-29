@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
     buffer[length] = '\0';
 
     // guesstimate, you may need to adopt this for very large files
-	char* buf = malloc(length*1024*9999);
+	char* buf = malloc(length*1024);
 	int res = json_prettify(buffer, buf);
 	if (res) {
 		printf("\n\n\n\n");
